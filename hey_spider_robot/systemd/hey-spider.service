@@ -1,0 +1,30 @@
+[Unit]
+Description=Hey Spider Robot with OLED Display and AI
+After=network.target multi-user.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/hey_spider_robot
+Environment=PATH=/home/pi/hey_spider_robot/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+EnvironmentFile=-/home/pi/hey_spider_robot/.env
+ExecStart=/home/pi/hey_spider_robot/venv/bin/python /home/pi/hey_spider_robot/main.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Security settings
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/home/pi/hey_spider_robot
+
+# Hardware access
+SupplementaryGroups=gpio i2c audio video
+
+[Install]
+WantedBy=multi-user.target

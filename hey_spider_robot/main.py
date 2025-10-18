@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Hey Spider Robot with OLED Display - Main Application (Fixed Version)
+Hey Spider Robot with OLED Display - Main Application (Auto Camera Start)
 Complete AI-powered spider robot system with visual feedback and modern OpenAI API integration
+Camera starts automatically on initialization
 """
 
 import sys
@@ -72,12 +73,20 @@ class HeySpiderRobot:
             self.spider = None
             
     def _init_vision(self):
-        """Initialize visual monitoring with error handling"""
+        """Initialize visual monitoring with error handling - AUTO START CAMERA"""
         try:
             print("Initializing visual monitoring...")
             from src.visual_monitor import VisualMonitor
             self.vision = VisualMonitor(self.oled)
             print("✅ Visual monitoring initialized successfully")
+            
+            # AUTO START CAMERA
+            print("Starting camera automatically...")
+            if self.vision.start_camera():
+                print("✅ Camera started automatically")
+            else:
+                print("⚠️  Camera initialization encountered issues, continuing in mock mode")
+                
         except Exception as e:
             print(f"❌ Visual monitoring initialization failed: {e}")
             traceback.print_exc()
@@ -337,6 +346,12 @@ class HeySpiderRobot:
             print("🤖 Spider Controller: Ready for commands")
         else:
             print("❌ Spider Controller: Not available")
+        
+        # Camera status
+        if self.vision:
+            print(f"📹 Camera: {'ACTIVE' if self.vision.camera_active else 'INACTIVE'}")
+        else:
+            print("📹 Camera: NOT AVAILABLE")
             
         print(f"🌐 Web Interface: http://localhost:{settings.WEB_PORT}")
         

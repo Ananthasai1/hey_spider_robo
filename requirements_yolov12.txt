@@ -1,0 +1,190 @@
+# Hey Spider Robot - Requirements with YOLOv12 and OV5647 Support
+# Optimized for Raspberry Pi with Real-Time Detection
+
+# ============================================================================
+# Core ML & Computer Vision (YOLOv12)
+# ============================================================================
+ultralytics>=8.1.0              # YOLOv12 support (includes v8, v11, v12)
+torch>=2.0.0                    # PyTorch for YOLO
+torchvision>=0.15.0             # Computer vision utilities
+opencv-python>=4.8.1.78         # OpenCV for image processing
+numpy>=1.24.0                   # Numerical computing
+pillow>=10.0.0                  # Image processing
+scipy>=1.11.0                   # Scientific computing
+
+# ============================================================================
+# Camera Support (OV5647)
+# ============================================================================
+picamera2>=0.3.12               # PiCamera2 library for OV5647
+# libcamera>=0.1.0              # Installed via apt (system package)
+
+# ============================================================================
+# Hardware Control (Raspberry Pi)
+# ============================================================================
+adafruit-circuitpython-pca9685>=3.4.15   # Servo controller
+adafruit-circuitpython-servokit>=1.3.13  # Servo kit utilities
+adafruit-circuitpython-ssd1306>=2.12.14  # OLED display
+RPi.GPIO>=0.7.1                          # GPIO control
+gpiozero>=1.6.2                          # High-level GPIO library
+
+# ============================================================================
+# Audio Processing & Voice Recognition
+# ============================================================================
+SpeechRecognition>=3.10.0       # Speech recognition
+pyaudio>=0.2.11                 # Audio I/O
+pydub>=0.25.1                   # Audio processing
+
+# ============================================================================
+# AI & Machine Learning
+# ============================================================================
+openai>=1.3.0                   # OpenAI API client (GPT-4, etc.)
+scikit-learn>=1.3.0             # Machine learning utilities
+
+# ============================================================================
+# Web Framework & Real-Time Communication
+# ============================================================================
+Flask>=3.0.0                    # Web framework
+Flask-SocketIO>=5.3.6           # WebSocket support
+python-socketio>=5.8.0          # Socket.IO client
+
+# ============================================================================
+# Image Processing & Visualization
+# ============================================================================
+imutils>=0.5.4                  # Image processing utilities
+matplotlib>=3.7.0               # Plotting and visualization
+seaborn>=0.12.0                 # Statistical visualization
+
+# ============================================================================
+# Performance & Optimization
+# ============================================================================
+psutil>=5.9.0                   # System monitoring
+cachetools>=5.3.0               # Caching utilities
+tqdm>=4.65.0                    # Progress bars
+
+# ============================================================================
+# Data Handling
+# ============================================================================
+pandas>=2.0.0                   # Data manipulation
+pyyaml>=6.0                     # YAML configuration files
+
+# ============================================================================
+# Networking & Communication
+# ============================================================================
+requests>=2.31.0                # HTTP library
+urllib3>=2.0.0                  # HTTP client
+websocket-client>=1.6.0         # WebSocket client
+
+# ============================================================================
+# Utilities & Development
+# ============================================================================
+python-dotenv>=1.0.0            # Environment variable management
+click>=8.1.0                    # Command line interface
+rich>=13.0.0                    # Rich text and beautiful formatting
+loguru>=0.7.0                   # Advanced logging
+
+# ============================================================================
+# Testing & Quality (Optional)
+# ============================================================================
+# pytest>=7.4.0                 # Testing framework
+# pytest-cov>=4.1.0             # Coverage testing
+# black>=23.0.0                 # Code formatting
+# flake8>=6.0.0                 # Code linting
+
+# ============================================================================
+# Security
+# ============================================================================
+cryptography>=41.0.0            # Cryptographic libraries
+
+# ============================================================================
+# System Dependencies (Install via apt/yum - Not pip)
+# ============================================================================
+# These need to be installed at system level:
+# - portaudio19-dev (for pyaudio)
+# - python3-dev (development headers)
+# - libffi-dev (foreign function interface)
+# - libjpeg-dev (JPEG image support)
+# - espeak espeak-data libespeak1 libespeak-dev (text-to-speech)
+# - i2c-tools (I2C utilities)
+# - cmake build-essential (build tools)
+# - libatlas-base-dev (linear algebra)
+# - libcamera-dev libcamera-apps (camera support)
+# - python3-picamera2 (PiCamera2 - install via apt)
+
+# ============================================================================
+# Raspberry Pi Specific
+# ============================================================================
+# These are automatically installed on Raspberry Pi OS:
+# - RPi.GPIO (GPIO control)
+# - lgpio (alternative GPIO library)
+
+# ============================================================================
+# Optional: Performance Enhancements
+# ============================================================================
+# Uncomment for additional optimizations:
+
+# ONNX Runtime for faster inference (CPU optimized)
+# onnxruntime>=1.16.0
+
+# OpenVINO for Intel optimization (if using Intel compute stick)
+# openvino>=2023.0.0
+
+# TensorRT for NVIDIA optimization (if using Jetson)
+# nvidia-tensorrt>=8.6.0
+
+# ============================================================================
+# Version Notes
+# ============================================================================
+# - Python 3.8+ required
+# - Tested on Raspberry Pi 4/5
+# - Compatible with Raspberry Pi OS (Debian-based)
+# - YOLOv12 through Ultralytics package (backwards compatible with v8, v11)
+
+# ============================================================================
+# Installation Notes
+# ============================================================================
+# 1. Install system dependencies first:
+#    sudo apt update && sudo apt install -y python3-pip python3-venv \
+#    libcamera-dev python3-picamera2 portaudio19-dev espeak i2c-tools
+#
+# 2. Create virtual environment:
+#    python3 -m venv venv
+#    source venv/bin/activate
+#
+# 3. Install requirements:
+#    pip install -r requirements.txt
+#
+# 4. Download YOLO models:
+#    python -c "from ultralytics import YOLO; YOLO('yolov8n.pt')"
+
+# ============================================================================
+# Memory Requirements
+# ============================================================================
+# Minimum: 2GB RAM (with swap)
+# Recommended: 4GB+ RAM
+# Model sizes:
+# - Nano (n): ~6MB, fastest, 30+ FPS on Pi 4
+# - Small (s): ~22MB, balanced, 15-20 FPS on Pi 4
+# - Medium (m): ~52MB, accurate, 8-12 FPS on Pi 4
+
+# ============================================================================
+# Performance Expectations (Raspberry Pi 4)
+# ============================================================================
+# YOLOv8n @ 640x640: ~25-30 FPS
+# YOLOv8n @ 320x320: ~40-50 FPS (lower accuracy)
+# YOLOv8s @ 640x640: ~15-20 FPS
+# YOLOv8m @ 640x640: ~8-12 FPS
+# 
+# With camera capture + detection + tracking:
+# - Expected overall FPS: 15-25 FPS (balanced preset)
+# - Night vision may reduce FPS by 10-20%
+
+# ============================================================================
+# Troubleshooting
+# ============================================================================
+# If installation fails:
+# 1. Ensure all system packages are installed
+# 2. Try installing packages individually
+# 3. Check Python version: python3 --version (need 3.8+)
+# 4. Update pip: pip install --upgrade pip
+# 5. Check available RAM: free -h
+# 6. Consider creating swap: sudo fallocate -l 2G /swapfile
